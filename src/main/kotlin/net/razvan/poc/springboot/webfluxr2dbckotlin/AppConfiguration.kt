@@ -17,12 +17,14 @@ import org.springframework.web.reactive.function.server.coRouter
 class AppConfiguration {
     @Bean
     fun userRoute(userHandler: UserHandler) = coRouter {
-        GET("/users", userHandler::findAll)
-        GET("/users/search", userHandler::search)
-        GET("/users/{id}", userHandler::findUser)
-        POST("/users", userHandler::addUser)
-        PUT("/users/{id}", userHandler::updateUser)
-        DELETE("/users/{id}", userHandler::deleteUser)
+        "/users".nest {
+            GET("", userHandler::findAll)
+            GET("/search", userHandler::search)
+            GET("/{id}", userHandler::findUser)
+            POST("", userHandler::addUser)
+            PUT("/{id}", userHandler::updateUser)
+            DELETE("/{id}", userHandler::deleteUser)
+        }
     }
 
     @Bean
